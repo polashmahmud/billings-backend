@@ -5,82 +5,55 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBillRequest;
 use App\Http\Requests\UpdateBillRequest;
 use App\Models\Bill;
+use App\Models\Customer;
+use Illuminate\Http\Request;
 
 class BillController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Customer $customer)
     {
-        //
+        $bills = $customer->bills()->paginate(9);
+
+        return response()->json([
+            'bills' => $bills,
+            'customer' => $customer,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(StoreBillRequest $request, Customer $customer)
     {
-        //
+       $bill = $customer->bills()->create($request->all());
+
+       return response()->json([
+           'message' => 'Bill created successfully',
+           'bill' => $bill
+       ], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreBillRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreBillRequest $request)
+    public function show(Customer $customer, Bill $bill)
     {
-        //
+        return response()->json([
+            'bill' => $bill,
+            'customer' => $customer,
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Bill  $bill
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Bill $bill)
+    public function update(UpdateBillRequest $request, Customer $customer, Bill $bill)
     {
-        //
+        $bill->update($request->all());
+
+        return response()->json([
+            'message' => 'Bill updated successfully',
+            'bill' => $bill
+        ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Bill  $bill
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Bill $bill)
+    public function destroy(Customer $customer, Bill $bill)
     {
-        //
-    }
+        $bill->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateBillRequest  $request
-     * @param  \App\Models\Bill  $bill
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateBillRequest $request, Bill $bill)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Bill  $bill
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Bill $bill)
-    {
-        //
+        return response()->json([
+            'message' => 'Bill deleted successfully',
+        ], 200);
     }
 }

@@ -13,7 +13,7 @@ class StoreBillRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class StoreBillRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'bill_no'        => 'required|unique:bills,bill_no',
+            'customer_id'    => 'required',
+            'bill_month'     => 'required',
+            'bill_year'      => 'required',
+            'bill_date'      => 'required|date',
+            'bill_amount'    => 'required',
+            'bill_paid_date' => 'nullable|date',
+            'bill_status'    => 'required, in:paid,unpaid',
         ];
     }
 }

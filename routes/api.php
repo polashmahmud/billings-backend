@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BillController;
 use App\Http\Controllers\CustomerChangePasswordController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerLoginController;
@@ -33,6 +34,5 @@ Route::group(['middleware' => ['api', 'manage_user_token']], function ($router) 
     Route::post('/me', [AuthController::class, 'me']);
     Route::apiResource('/customers', CustomerController::class);
     Route::put('/customers/{customer}/password', CustomerChangePasswordController::class);
+    Route::apiResource('/customers/{customer}/bills', BillController::class);
 });
-
-

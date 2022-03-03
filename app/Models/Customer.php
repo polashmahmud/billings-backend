@@ -47,4 +47,9 @@ class Customer extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function bills()
+    {
+        return $this->hasMany(Bill::class);
+    }
 }

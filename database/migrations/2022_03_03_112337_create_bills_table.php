@@ -17,9 +17,9 @@ class CreateBillsTable extends Migration
             $table->id();
             $table->string('bill_no');
             $table->string('bill_month');
-            $table->string('year');
+            $table->string('bill_year');
             $table->date('bill_date');
-            $table->string('bill_amount');
+            $table->decimal('bill_amount', 10, 2);
             $table->date('bill_paid_date')->nullable();
             $table->string('bill_status')->default('unpaid');
             $table->unsignedBigInteger('customer_id');
