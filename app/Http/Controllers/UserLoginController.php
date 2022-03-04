@@ -12,10 +12,11 @@ class UserLoginController extends Controller
     {
         auth()->shouldUse('api_user');
     }
+
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(LoginRequest $request): \Illuminate\Http\JsonResponse
@@ -38,11 +39,11 @@ class UserLoginController extends Controller
     protected function respondWithToken($token): \Illuminate\Http\JsonResponse
     {
         return response()->json([
-            'token' => $token,
+            'token'      => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user(),
-            'user_type' => 'user'
+            'user'       => auth()->user(),
+            'user_type'  => 'admin'
         ], 200);
     }
 }
