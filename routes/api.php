@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\CustomerBillController;
 use App\Http\Controllers\CustomerChangePasswordController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerLoginController;
@@ -22,10 +23,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', UserLoginController::class);
 Route::post('/login-customer', CustomerLoginController::class);
 
-Route::group(['middleware' => ['api','manage_token:api_customer']], function () {
-    Route::get('/customer', function (Request $request) {
-        return $request->user('api_customer');
-    });
+Route::group(['middleware' => ['api','manage_customer_token']], function () {
+    Route::get('/customer/bills', CustomerBillController::class);
 });
 
 Route::group(['middleware' => ['api', 'manage_user_token']], function ($router) {
