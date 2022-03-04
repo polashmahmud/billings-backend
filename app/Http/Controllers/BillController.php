@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BillGenerate;
 use App\Http\Requests\StoreBillRequest;
 use App\Http\Requests\UpdateBillRequest;
 use App\Models\Bill;
@@ -32,6 +33,8 @@ class BillController extends Controller
         $bill->bill_amount = $request->bill_amount;
         $bill->bill_status = 'unpaid';
         $bill->save();
+
+        event(new BillGenerate($bill, $customer));
 
        return response()->json([
            'message' => 'Bill created successfully',
