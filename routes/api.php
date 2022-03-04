@@ -36,4 +36,5 @@ Route::group(['middleware' => ['api', 'manage_user_token']], function ($router) 
     Route::put('/customers/{customer}/password', CustomerChangePasswordController::class);
     Route::apiResource('/customers/{customer}/bills', BillController::class)
         ->only(['index', 'store', 'destroy']);
+    Route::post('/customers/{customer}/bills/{bill}/pay', BillController::class . '@pay');
 });

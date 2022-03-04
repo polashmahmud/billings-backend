@@ -47,4 +47,16 @@ class BillController extends Controller
             'message' => 'Bill deleted successfully',
         ], 200);
     }
+
+    public function pay(Customer $customer, Bill $bill)
+    {
+        $bill->bill_status = 'paid';
+        $bill->save();
+
+        return response()->json([
+            'message' => 'Bill paid successfully',
+            'bill' => $bill
+        ], 200);
+    }
+
 }
