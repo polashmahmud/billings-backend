@@ -28,7 +28,7 @@ class StoreBillRequest extends FormRequest
             'customer_id'    => 'required',
             'bill_month'     => 'required',
             'bill_year'      => 'required',
-            'bill_date'      => 'required|date',
+            'bill_date'      => 'nullable|date',
             'bill_amount'    => 'required',
             'bill_paid_date' => 'nullable|date',
             'bill_status'    => 'required, in:paid,unpaid',

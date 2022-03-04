@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 class BillController extends Controller
 {
+
     public function index(Customer $customer)
     {
         $bills = $customer->bills()->paginate(9);
@@ -22,30 +23,20 @@ class BillController extends Controller
 
     public function store(StoreBillRequest $request, Customer $customer)
     {
-       $bill = $customer->bills()->create($request->all());
+        $bill = new Bill();
+        $bill->customer_id = $customer->id;
+        $bill->bill_no = $request->bill_no;
+        $bill->bill_month = $request->bill_month;
+        $bill->bill_year = $request->bill_year;
+        $bill->bill_date = "{$request->bill_year}-{$request->bill_month}-01";
+        $bill->bill_amount = $request->bill_amount;
+        $bill->bill_status = 'unpaid';
+        $bill->save();
 
        return response()->json([
            'message' => 'Bill created successfully',
            'bill' => $bill
        ], 201);
-    }
-
-    public function show(Customer $customer, Bill $bill)
-    {
-        return response()->json([
-            'bill' => $bill,
-            'customer' => $customer,
-        ]);
-    }
-
-    public function update(UpdateBillRequest $request, Customer $customer, Bill $bill)
-    {
-        $bill->update($request->all());
-
-        return response()->json([
-            'message' => 'Bill updated successfully',
-            'bill' => $bill
-        ], 200);
     }
 
     public function destroy(Customer $customer, Bill $bill)
