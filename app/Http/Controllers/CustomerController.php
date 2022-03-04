@@ -17,9 +17,9 @@ class CustomerController extends Controller
         if ($search != '') {
             $customers = Customer::where('name', 'like', "%$search%")
                 ->orWhere('email', 'like', "%$search%")
-                ->paginate(3);
+                ->paginate(9);
         } else {
-            $customers = Customer::paginate(3);
+            $customers = Customer::paginate(9);
         }
 
         return response()->json($customers);

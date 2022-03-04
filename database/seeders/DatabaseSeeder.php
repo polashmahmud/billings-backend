@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Bill;
+use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,7 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         \App\Models\User::factory(10)->create();
-         \App\Models\Customer::factory(10)->create();
+
+        User::factory()->create(['email' => 'admin@example.com', 'name' => 'Admin']);
+        User::factory(25)->create();
+
+        Customer::factory()->create(['email' => 'customer@example.com', 'name' => 'Mr. Customer']);
+        Customer::factory(35)->create();
+        Bill::factory(100)->create();
     }
 }
